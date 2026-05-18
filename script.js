@@ -1,59 +1,60 @@
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// Lenis 初期化
-const lenis = new Lenis({
-  duration: 1.2,
-  smoothWheel: true,
-});
+const panels = gsap.utils.toArray('.panel');
+let currentIndex = 0;
+let isAnimating = false;
 
-// Lenis と GSAP を連携
-lenis.on('scroll', ScrollTrigger.update);
+// 1スクロールで1画面移動
+function goToPanel(index) {
+  if (index < 0 || index >= panels.length || isAnimating) return;
 
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
+  isAnimating = true;
+  currentIndex = index;
 
-gsap.ticker.lagSmoothing(0);
-
-// 画像がスクロールで出てくるアニメーション
-gsap.utils.toArray('.reveal-img').forEach((wrap) => {
-  const img = wrap.querySelector('img');
-
-  gsap.fromTo(
-    wrap,
-    {
-      clipPath: 'inset(20% 0 20% 0)',
-      y: 80,
-      opacity: 0,
+  gsap.to(window, {
+    scrollTo: {
+      y: panels[index],
+      autoKill: false,
     },
-    {
-      clipPath: 'inset(0% 0 0% 0)',
-      y: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: wrap,
-        start: 'top 80%',
-        end: 'top 35%',
-        scrub: 1,
-      },
+    duration: 0.9,
+    ease: 'power3.inOut',
+    onComplete: () => {
+      isAnimating = false;
+    },
+  });
+}
+
+window.addEventListener(
+  'wheel',
+  (e) => {
+    e.preventDefault();
+
+    if (e.deltaY > 0) {
+      goToPanel(currentIndex + 1);
+    } else {
+      goToPanel(currentIndex - 1);
     }
-  );
+  },
+  { passive: false }
+);
+
+// 各画面内の画像パララックス
+panels.forEach((panel) => {
+  const img = panel.querySelector('.parallax-img img');
 
   gsap.fromTo(
     img,
     {
-      scale: 1.2,
+      yPercent: -10,
     },
     {
-      scale: 1,
+      yPercent: 10,
       ease: 'none',
       scrollTrigger: {
-        trigger: wrap,
-        start: 'top 80%',
-        end: 'bottom 40%',
-        scrub: 1,
+        trigger: panel,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
       },
     }
   );
