@@ -19,11 +19,12 @@ function goToPanel(index) {
     duration: 0.9,
     ease: 'power3.inOut',
     onComplete: () => {
-      isAnimating = false;
+      setTimeout(() => {
+        isAnimating = false;
+      }, 500);
     },
   });
 }
-
 window.addEventListener(
   'wheel',
   (e) => {
