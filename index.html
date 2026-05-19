@@ -2,37 +2,46 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Scene 01</title>
+  <title>Scene 1</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <section class="panel panel01">
-    <h2>Scene 01</h2>
+    <h2>Scene 1</h2>
     <div class="parallax-img">
       <img src="https://picsum.photos/900/600?random=1" alt="">
     </div>
   </section>
-
+  <section class="panel bg-section">
+    <div class="bg"></div>
+    <h2>Scene 2</h2>
+  </section>
   <section class="panel panel02">
-    <h2>Scene 02</h2>
+    <h2>Scene 3</h2>
     <div class="parallax-img">
       <img src="https://picsum.photos/900/600?random=2" alt="">
     </div>
   </section>
 
   <section class="panel panel03">
-    <h2>Scene 03</h2>
+    <h2>Scene 4</h2>
     <div class="parallax-img">
       <img src="https://picsum.photos/900/600?random=3" alt="">
     </div>
   </section>
 
   <section class="panel panel04">
-    <h2>Scene 04</h2>
+    <h2>Scene 5</h2>
     <div class="parallax-img">
       <img src="https://picsum.photos/900/600?random=1" alt="">
     </div>
   </section>
+
+  <div class="page-indicator">
+    <span id="current">01</span>
+    <span class="line"></span>
+    <span id="total">05</span>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
